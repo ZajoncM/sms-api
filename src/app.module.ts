@@ -16,10 +16,10 @@ import { ConfigModule } from '@nestjs/config';
       driver: ApolloDriver,
       autoSchemaFile: true,
     }),
-    AuthModule,
-    UsersModule,
     ConfigModule.forRoot(),
     DatabaseModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [

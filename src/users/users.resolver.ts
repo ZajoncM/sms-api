@@ -39,6 +39,6 @@ export class UsersResolver {
   @Query(() => User)
   @UseGuards(GqlAuthGuard)
   currentUser(@CurrentUser() user: User) {
-    return this.usersService.findOne(user.username);
+    return this.usersService.findOne(user.email);
   }
 }

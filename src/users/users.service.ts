@@ -8,13 +8,17 @@ export class UsersService {
   private readonly users: User[] = [
     {
       id: 1,
-      username: 'john',
+      email: 'john',
       password: 'changeme',
+      firstName: '',
+      lastName: '',
     },
     {
       id: 2,
-      username: 'maria',
+      email: 'maria',
       password: 'guess',
+      firstName: '',
+      lastName: '',
     },
   ];
 
@@ -26,8 +30,8 @@ export class UsersService {
     return this.users;
   }
 
-  findOne(username: string) {
-    return this.users.find((user) => user.username === username);
+  findOne(email: string) {
+    return this.users.find((user) => user.email === email);
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
