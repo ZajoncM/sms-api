@@ -20,4 +20,5 @@ export const makeDatabaseConfig = (
   password: config.password,
   port: config.port,
   namingStrategy: new SnakeNamingStrategy(),
+  entities: [__dirname + '/../**/*.entity.{js,ts}'],
 });

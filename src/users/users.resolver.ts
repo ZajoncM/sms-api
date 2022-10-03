@@ -8,6 +8,7 @@ import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { CurrentUser } from 'src/utils/current-user.decorator';
 
 @Resolver(() => User)
+@UseGuards(GqlAuthGuard)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
@@ -17,13 +18,15 @@ export class UsersResolver {
   }
 
   @Query(() => [User], { name: 'users' })
-  findAll() {
+  async findAll() {
     return this.usersService.findAll();
   }
 
   @Query(() => User, { name: 'user' })
-  findOne(@Args('username', { type: () => String }) username: string) {
-    return this.usersService.findOne(username);
+  findOne(
+    @Args('user', { type: () => UpdateUserInput }) user: UpdateUserInput,
+  ) {
+    return this.usersService.findOne(user);
   }
 
   @Mutation(() => User)
@@ -37,8 +40,7 @@ export class UsersResolver {
   }
 
   @Query(() => User)
-  @UseGuards(GqlAuthGuard)
   currentUser(@CurrentUser() user: User) {
-    return this.usersService.findOne(user.email);
+    return this.usersService.findOne({ email: user.email });
   }
 }

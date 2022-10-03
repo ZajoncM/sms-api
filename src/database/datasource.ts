@@ -6,6 +6,5 @@ dotenv.config();
 
 export default new DataSource({
   ...makeDatabaseConfig(DatabaseConfig()),
-  entities: [__dirname + '/../**/*.entity.{js,ts}'],
   migrations: [__dirname + '/../database/migrations/*.{js,ts}'],
 });
