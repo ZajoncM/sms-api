@@ -5,7 +5,18 @@ import { User } from './entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  users: User[] = [{ exampleField: 3 }];
+  private readonly users: User[] = [
+    {
+      id: 1,
+      username: 'john',
+      password: 'changeme',
+    },
+    {
+      id: 2,
+      username: 'maria',
+      password: 'guess',
+    },
+  ];
 
   create(createUserInput: CreateUserInput) {
     return this.users[0];
@@ -15,8 +26,8 @@ export class UsersService {
     return this.users;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(username: string) {
+    return this.users.find((user) => user.username === username);
   }
 
   update(id: number, updateUserInput: UpdateUserInput) {
