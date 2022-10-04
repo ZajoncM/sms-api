@@ -6,23 +6,29 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { UseGuards } from '@nestjs/common';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { CurrentUser } from 'src/utils/current-user.decorator';
+import { Roles } from 'src/utils/roles.decorator';
+import { UserRole } from './enums/role.enum';
+import { RolesGuard } from './guards/roles.guard';
 
 @Resolver(() => User)
-@UseGuards(GqlAuthGuard)
+@UseGuards(GqlAuthGuard, RolesGuard)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Mutation(() => User)
+  @Roles(UserRole.ADMIN)
   createUser(@Args('createUserInput') createUserInput: CreateUserInput) {
     return this.usersService.create(createUserInput);
   }
 
   @Query(() => [User], { name: 'users' })
+  @Roles(UserRole.ADMIN)
   async findAll() {
     return this.usersService.findAll();
   }
 
   @Query(() => User, { name: 'user' })
+  @Roles(UserRole.ADMIN)
   findOne(
     @Args('user', { type: () => UpdateUserInput }) user: UpdateUserInput,
   ) {
@@ -30,11 +36,13 @@ export class UsersResolver {
   }
 
   @Mutation(() => User)
+  @Roles(UserRole.ADMIN)
   updateUser(@Args('updateUserInput') updateUserInput: UpdateUserInput) {
     return this.usersService.update(updateUserInput.id, updateUserInput);
   }
 
   @Mutation(() => User)
+  @Roles(UserRole.ADMIN)
   removeUser(@Args('id', { type: () => Int }) id: number) {
     return this.usersService.remove(id);
   }
