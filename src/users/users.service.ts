@@ -4,6 +4,10 @@ import { UpdateUserInput } from './dto/update-user.input';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UserRole } from './enums/role.enum';
+import { Student } from './entities/student.entity';
+import { Parent } from './entities/parent.entity';
+import { Teacher } from './entities/teacher.entity';
 
 @Injectable()
 export class UsersService {
@@ -14,6 +18,8 @@ export class UsersService {
 
   async create(createUserInput: CreateUserInput) {
     const user = await this.usersRepository.create(createUserInput);
+
+    await this.createRole(user);
 
     return user.save();
   }
@@ -38,5 +44,21 @@ export class UsersService {
     const deletedUser = await user.remove();
 
     return { ...deletedUser, id };
+  }
+
+  async createRole(user: User) {
+    if (user.role === UserRole.STUDENT) {
+      user.student = new Student();
+    }
+
+    if (user.role === UserRole.PARENT) {
+      user.parent = new Parent();
+    }
+
+    if (user.role === UserRole.TEACHER) {
+      user.teacher = new Teacher();
+    }
+
+    return user.save();
   }
 }
