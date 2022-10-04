@@ -35,7 +35,7 @@ export class UsersService {
   async remove(id: number) {
     const user = await this.findOne({ id });
 
-    const deletedUser = user.remove();
+    const deletedUser = await user.remove();
 
     return { ...deletedUser, id };
   }
