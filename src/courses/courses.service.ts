@@ -4,6 +4,7 @@ import { Course } from './entities/course.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GroupsService } from 'src/groups/groups.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class CoursesService {
@@ -11,6 +12,7 @@ export class CoursesService {
     @InjectRepository(Course)
     private courseRepository: Repository<Course>,
     private readonly groupsService: GroupsService,
+    private readonly usersService: UsersService,
   ) {}
 
   async create(createCourseInput: CreateCourseInput) {
@@ -19,6 +21,21 @@ export class CoursesService {
     const group = await this.groupsService.findOne(Number(groupId));
 
     const course = await this.courseRepository.create({ ...rest, group });
+
+    return course.save();
+  }
+
+  async update(id: number, updateCourseInput: CreateCourseInput) {
+    const { name, teacherId } = updateCourseInput;
+
+    const course = await this.courseRepository.findOneBy({ id });
+
+    if (teacherId) {
+      const teacher = await this.usersService.findTeacher(Number(teacherId));
+      course.teacher = teacher;
+    }
+
+    course.name = name;
 
     return course.save();
   }

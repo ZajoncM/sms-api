@@ -82,8 +82,15 @@ export class UsersService {
   }
 
   async findTeacherByGroup(id: number) {
-    return this.studentRepository.findOne({
+    return this.teacherRepository.findOne({
       where: { group: { id } },
+      relations: { user: true },
+    });
+  }
+
+  async findTeacherByCourse(id: number) {
+    return this.teacherRepository.findOne({
+      where: { courses: { id } },
       relations: { user: true },
     });
   }
