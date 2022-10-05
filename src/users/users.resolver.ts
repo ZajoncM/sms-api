@@ -23,8 +23,11 @@ export class UsersResolver {
 
   @Query(() => [User], { name: 'users' })
   @Roles(UserRole.ADMIN)
-  async findAll() {
-    return this.usersService.findAll();
+  findAll(
+    @Args('user', { type: () => UpdateUserInput, nullable: true })
+    user: UpdateUserInput,
+  ) {
+    return this.usersService.findAll(user);
   }
 
   @Query(() => User, { name: 'user' })

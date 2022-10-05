@@ -1,11 +1,10 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, InputType } from '@nestjs/graphql';
 import {
   Entity,
   Column,
   OneToOne,
   PrimaryGeneratedColumn,
   BaseEntity,
-  JoinColumn,
 } from 'typeorm';
 import { UserRole } from '../enums/role.enum';
 import { Parent } from './parent.entity';
@@ -13,6 +12,7 @@ import { Student } from './student.entity';
 import { Teacher } from './teacher.entity';
 
 @Entity()
+@InputType('userEntity')
 @ObjectType()
 export class User extends BaseEntity {
   @Field(() => ID)

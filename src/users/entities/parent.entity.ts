@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, InputType } from '@nestjs/graphql';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -9,6 +9,7 @@ import {
 import { User } from './user.entity';
 
 @Entity()
+@InputType('parentEntity')
 @ObjectType()
 export class Parent extends BaseEntity {
   @Field(() => ID)

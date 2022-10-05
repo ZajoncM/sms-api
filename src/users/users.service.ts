@@ -14,6 +14,11 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+
+    @InjectRepository(Student)
+    private studentRepository: Repository<Student>,
+    @InjectRepository(Teacher)
+    private teacherRepository: Repository<Teacher>,
   ) {}
 
   async create(createUserInput: CreateUserInput) {
@@ -60,5 +65,13 @@ export class UsersService {
     }
 
     return user.save();
+  }
+
+  async findTeacher(id: number) {
+    return this.teacherRepository.findOneBy({ id });
+  }
+
+  async findStudent(id: number) {
+    return this.studentRepository.findOneBy({ id });
   }
 }
