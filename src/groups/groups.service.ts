@@ -59,7 +59,16 @@ export class GroupsService {
 
     const educator = await this.usersService.findTeacher(Number(educatorId));
 
+    const students: Student[] = [];
+    for (const studentId of studentIds) {
+      const student = await this.usersService.findStudent(Number(studentId));
+
+      students.push(student);
+    }
+
     group.educator = educator;
+
+    group.students = students;
 
     return group.save();
   }
