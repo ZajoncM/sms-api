@@ -8,6 +8,7 @@ import { DatabaseModule } from './database/database.module';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { GroupsModule } from './groups/groups.module';
+import { CoursesModule } from './courses/courses.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { GroupsModule } from './groups/groups.module';
     }),
     UsersModule,
     GroupsModule,
+    CoursesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -14,7 +14,6 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-
     @InjectRepository(Student)
     private studentRepository: Repository<Student>,
     @InjectRepository(Teacher)
@@ -73,5 +72,19 @@ export class UsersService {
 
   async findStudent(id: number) {
     return this.studentRepository.findOneBy({ id });
+  }
+
+  async findStudentsByGroup(id: number) {
+    return this.studentRepository.find({
+      where: { group: { id } },
+      relations: { user: true },
+    });
+  }
+
+  async findTeacherByGroup(id: number) {
+    return this.studentRepository.findOne({
+      where: { group: { id } },
+      relations: { user: true },
+    });
   }
 }

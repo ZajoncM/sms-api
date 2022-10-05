@@ -4,9 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GroupsResolver } from './groups.resolver';
 import { GroupsService } from './groups.service';
 import { UsersModule } from 'src/users/users.module';
+import { CoursesModule } from 'src/courses/courses.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Group]), UsersModule],
+  imports: [TypeOrmModule.forFeature([Group]), UsersModule, CoursesModule],
   providers: [GroupsResolver, GroupsService],
+  exports: [GroupsService],
 })
 export class GroupsModule {}

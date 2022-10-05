@@ -38,9 +38,7 @@ export class GroupsService {
   }
 
   async findAll() {
-    return this.groupRepository.find({
-      relations: { students: { user: true }, educator: { user: true } },
-    });
+    return this.groupRepository.find();
   }
 
   async findOne(id: number) {
