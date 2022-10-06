@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { GroupsService } from 'src/groups/groups.service';
 import { UsersService } from 'src/users/users.service';
+import { UpdateCourseInput } from './dto/update-course.input';
 
 @Injectable()
 export class CoursesService {
@@ -40,8 +41,13 @@ export class CoursesService {
     return course.save();
   }
 
-  async findAll() {
-    return this.courseRepository.find();
+  async findAll(courseDto?: UpdateCourseInput) {
+    const { teacherId, ...rest } = courseDto;
+
+    return this.courseRepository.findBy({
+      ...rest,
+      teacher: { id: Number(teacherId) },
+    });
   }
 
   async findByGroup(id: number) {

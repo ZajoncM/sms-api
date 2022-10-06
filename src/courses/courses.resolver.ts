@@ -16,6 +16,7 @@ import { UsersService } from 'src/users/users.service';
 import { Roles } from 'src/utils/roles.decorator';
 import { CoursesService } from './courses.service';
 import { CreateCourseInput } from './dto/create-course.input';
+import { UpdateCourseInput } from './dto/update-course.input';
 import { Course } from './entities/course.entity';
 
 @Resolver(() => Course)
@@ -35,9 +36,12 @@ export class CoursesResolver {
   }
 
   @Query(() => [Course], { name: 'courses' })
-  @Roles(UserRole.ADMIN)
-  async findAll() {
-    return this.coursesService.findAll();
+  @Roles(UserRole.ADMIN, UserRole.TEACHER)
+  async findAll(
+    @Args('updateCourseInput', { nullable: true })
+    courseDto?: UpdateCourseInput,
+  ) {
+    return this.coursesService.findAll(courseDto);
   }
 
   @Query(() => Course, { name: 'course' })
