@@ -3,7 +3,7 @@ import { CreateGroupInput } from './dto/create-group.input';
 import { UpdateGroupInput } from './dto/update-group.input';
 import { Group } from './entities/group.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { UsersService } from 'src/users/users.service';
 import { Student } from 'src/users/entities/student.entity';
 
@@ -45,6 +45,12 @@ export class GroupsService {
     return this.groupRepository.findOne({
       where: { id },
       relations: { students: { user: true }, educator: { user: true } },
+    });
+  }
+
+  async findOneByCourse(courseId: number) {
+    return this.groupRepository.findOne({
+      where: { courses: { id: In([courseId]) } },
     });
   }
 

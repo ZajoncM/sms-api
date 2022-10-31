@@ -8,8 +8,8 @@ import {
   ResolveField,
   Resolver,
 } from '@nestjs/graphql';
-import { group } from 'console';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
+import { GroupsService } from 'src/groups/groups.service';
 import { UserRole } from 'src/users/enums/role.enum';
 import { RolesGuard } from 'src/users/guards/roles.guard';
 import { UsersService } from 'src/users/users.service';
@@ -25,6 +25,7 @@ export class CoursesResolver {
   constructor(
     private readonly coursesService: CoursesService,
     private readonly usersService: UsersService,
+    private readonly groupsService: GroupsService,
   ) {}
 
   @Mutation(() => Course)
@@ -45,7 +46,7 @@ export class CoursesResolver {
   }
 
   @Query(() => Course, { name: 'course' })
-  @Roles(UserRole.ADMIN)
+  @Roles(UserRole.ADMIN, UserRole.TEACHER)
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.coursesService.findOne(id);
   }
@@ -68,5 +69,10 @@ export class CoursesResolver {
   @ResolveField('teacher')
   teacher(@Parent() course: Course) {
     return this.usersService.findTeacherByCourse(course.id);
+  }
+
+  @ResolveField('group')
+  group(@Parent() course: Course) {
+    return this.groupsService.findOneByCourse(course.id);
   }
 }
