@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateCourseInput } from './dto/create-course.input';
 import { Course } from './entities/course.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { GroupsService } from 'src/groups/groups.service';
 import { UsersService } from 'src/users/users.service';
 import { UpdateCourseInput } from './dto/update-course.input';
@@ -52,6 +52,10 @@ export class CoursesService {
 
   async findByGroup(id: number) {
     return this.courseRepository.findBy({ group: { id } });
+  }
+
+  async findByLesson(id: number) {
+    return this.courseRepository.findBy({ lessons: { id: In([id]) } });
   }
 
   async findOne(id: number) {
