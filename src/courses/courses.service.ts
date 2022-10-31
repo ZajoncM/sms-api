@@ -58,6 +58,10 @@ export class CoursesService {
     return this.courseRepository.findBy({ lessons: { id: In([id]) } });
   }
 
+  async findByExam(id: number) {
+    return this.courseRepository.findBy({ exams: { id: In([id]) } });
+  }
+
   async findOne(id: number) {
     return this.courseRepository.findOneBy({ id });
   }

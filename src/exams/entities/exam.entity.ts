@@ -9,9 +9,9 @@ import {
 } from 'typeorm';
 
 @Entity()
-@InputType('lessonEntity')
+@InputType('examEntity')
 @ObjectType()
-export class Lesson extends BaseEntity {
+export class Exam extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn()
   id: number;

@@ -10,6 +10,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GroupsModule } from './groups/groups.module';
 import { CoursesModule } from './courses/courses.module';
 import { LessonsModule } from './lessons/lessons.module';
+import { ExamsModule } from './exams/exams.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { LessonsModule } from './lessons/lessons.module';
     GroupsModule,
     CoursesModule,
     LessonsModule,
+    ExamsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

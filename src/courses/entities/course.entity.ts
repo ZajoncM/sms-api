@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID, InputType } from '@nestjs/graphql';
+import { Exam } from 'src/exams/entities/exam.entity';
 import { Group } from 'src/groups/entities/group.entity';
 import { Lesson } from 'src/lessons/entities/lesson.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
@@ -34,4 +35,8 @@ export class Course extends BaseEntity {
   @Field(() => [Lesson])
   @OneToMany(() => Lesson, (lesson) => lesson.course)
   lessons: Lesson[];
+
+  @Field(() => [Exam])
+  @OneToMany(() => Exam, (exam) => exam.course)
+  exams: Exam[];
 }
