@@ -8,7 +8,8 @@ import {
   Parent,
   ResolveField,
 } from '@nestjs/graphql';
-import { group } from 'console';
+import { AttendancesService } from 'src/attendances/attendances.service';
+import { Attendance } from 'src/attendances/entities/attendance.entity';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { CoursesService } from 'src/courses/courses.service';
 
@@ -26,6 +27,7 @@ export class LessonsResolver {
   constructor(
     private readonly lessonsService: LessonsService,
     private readonly coursesService: CoursesService,
+    private readonly attendancesService: AttendancesService,
   ) {}
 
   @Mutation(() => Lesson)
@@ -68,5 +70,12 @@ export class LessonsResolver {
   @ResolveField('course')
   course(@Parent() lesson: Lesson) {
     return this.coursesService.findByLesson(lesson.id);
+  }
+
+  @ResolveField('attendances')
+  async attendances(@Parent() lesson: Lesson) {
+    return await this.attendancesService.findAll({
+      lessonId: lesson.id.toString(),
+    });
   }
 }

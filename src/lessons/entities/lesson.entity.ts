@@ -6,7 +6,9 @@ import {
   BaseEntity,
   Column,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
+import { Attendance } from '../../attendances/entities/attendance.entity';
 
 @Entity()
 @InputType('lessonEntity')
@@ -20,7 +22,15 @@ export class Lesson extends BaseEntity {
   @Column()
   name: string;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
+  @Column({ nullable: true })
+  description: string;
+
+  @Field(() => Course)
   @ManyToOne(() => Course, (course) => course.lessons)
   course: Course;
+
+  @Field(() => [Attendance])
+  @OneToMany(() => Attendance, (attendance) => attendance.lesson)
+  attendances: Attendance[];
 }

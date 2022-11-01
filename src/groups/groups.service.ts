@@ -44,7 +44,10 @@ export class GroupsService {
   async findOne(id: number) {
     return this.groupRepository.findOne({
       where: { id },
-      relations: { students: { user: true }, educator: { user: true } },
+      relations: {
+        students: { user: true, attendances: true },
+        educator: { user: true },
+      },
     });
   }
 

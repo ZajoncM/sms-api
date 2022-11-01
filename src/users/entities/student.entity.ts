@@ -1,5 +1,6 @@
 import { ObjectType, InputType, Field, ID } from '@nestjs/graphql';
 import { Group } from 'src/groups/entities/group.entity';
+import { Attendance } from 'src/attendances/entities/attendance.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,6 +8,7 @@ import {
   JoinColumn,
   OneToOne,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { User } from './user.entity';
 
@@ -28,4 +30,8 @@ export class Student extends BaseEntity {
   @Field(() => Group)
   @ManyToOne(() => Group, (group) => group.students, { onDelete: 'SET NULL' })
   group: Group;
+
+  @Field(() => [Attendance], { nullable: true })
+  @OneToMany(() => Attendance, (attendance) => attendance.lesson)
+  attendances: Attendance[];
 }

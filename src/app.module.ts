@@ -11,6 +11,7 @@ import { GroupsModule } from './groups/groups.module';
 import { CoursesModule } from './courses/courses.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { ExamsModule } from './exams/exams.module';
+import { AttendancesModule } from './attendances/attendances.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ExamsModule } from './exams/exams.module';
     CoursesModule,
     LessonsModule,
     ExamsModule,
+    AttendancesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
