@@ -11,6 +11,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { User } from './user.entity';
+import { Grade } from 'src/grades/entities/grade.entity';
 
 @Entity()
 @InputType('studentEntity')
@@ -32,6 +33,10 @@ export class Student extends BaseEntity {
   group: Group;
 
   @Field(() => [Attendance], { nullable: true })
-  @OneToMany(() => Attendance, (attendance) => attendance.lesson)
+  @OneToMany(() => Attendance, (attendance) => attendance.student)
   attendances: Attendance[];
+
+  @Field(() => [Grade], { nullable: true })
+  @OneToMany(() => Grade, (grade) => grade.student)
+  grades: Grade[];
 }

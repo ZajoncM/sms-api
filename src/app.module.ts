@@ -12,6 +12,7 @@ import { CoursesModule } from './courses/courses.module';
 import { LessonsModule } from './lessons/lessons.module';
 import { ExamsModule } from './exams/exams.module';
 import { AttendancesModule } from './attendances/attendances.module';
+import { GradesModule } from './grades/grades.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AttendancesModule } from './attendances/attendances.module';
     LessonsModule,
     ExamsModule,
     AttendancesModule,
+    GradesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

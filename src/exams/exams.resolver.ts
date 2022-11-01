@@ -8,6 +8,7 @@ import {
   Resolver,
 } from '@nestjs/graphql';
 import { CoursesService } from 'src/courses/courses.service';
+import { GradesService } from 'src/grades/grades.service';
 import { UserRole } from 'src/users/enums/role.enum';
 import { Roles } from 'src/utils/roles.decorator';
 import { CreateExamInput } from './dto/create-exam.input';
@@ -20,6 +21,7 @@ export class ExamsResolver {
   constructor(
     private readonly examsService: ExamsService,
     private readonly coursesService: CoursesService,
+    private readonly gradesService: GradesService,
   ) {}
 
   @Mutation(() => Exam)
@@ -58,5 +60,12 @@ export class ExamsResolver {
   @ResolveField('course')
   course(@Parent() exam: Exam) {
     return this.coursesService.findByExam(exam.id);
+  }
+
+  @ResolveField('grades')
+  async grades(@Parent() exam: Exam) {
+    return await this.gradesService.findAll({
+      examId: exam.id.toString(),
+    });
   }
 }
