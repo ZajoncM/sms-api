@@ -9,7 +9,6 @@ import {
   ResolveField,
 } from '@nestjs/graphql';
 import { AttendancesService } from 'src/attendances/attendances.service';
-import { Attendance } from 'src/attendances/entities/attendance.entity';
 import { GqlAuthGuard } from 'src/auth/gql-auth.guard';
 import { CoursesService } from 'src/courses/courses.service';
 

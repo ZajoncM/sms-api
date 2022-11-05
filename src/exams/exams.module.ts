@@ -9,7 +9,7 @@ import { ExamsService } from './exams.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Exam]),
-    CoursesModule,
+    forwardRef(() => CoursesModule),
     forwardRef(() => GradesModule),
   ],
   providers: [ExamsResolver, ExamsService],

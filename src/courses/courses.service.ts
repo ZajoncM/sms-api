@@ -6,7 +6,6 @@ import { In, Repository } from 'typeorm';
 import { GroupsService } from 'src/groups/groups.service';
 import { UsersService } from 'src/users/users.service';
 import { UpdateCourseInput } from './dto/update-course.input';
-import { async } from 'rxjs';
 
 @Injectable()
 export class CoursesService {
@@ -43,11 +42,21 @@ export class CoursesService {
   }
 
   async findAll(courseDto?: UpdateCourseInput) {
-    const { teacherId, ...rest } = courseDto;
+    const { teacherId, studentId, ...rest } = courseDto;
 
     return this.courseRepository.findBy({
       ...rest,
       teacher: { id: Number(teacherId) },
+    });
+  }
+
+  async findAllByStudent(studentId: number) {
+    return this.courseRepository.find({
+      where: { group: { students: { id: In([studentId]) } } },
+      relations: {
+        exams: { grades: { student: true } },
+        lessons: { attendances: { student: true } },
+      },
     });
   }
 

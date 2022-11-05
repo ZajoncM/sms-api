@@ -47,7 +47,19 @@ export class GradesService {
     const { examId, ...rest } = gradeDto;
 
     return this.gradeRepository.find({
-      where: { ...rest, exam: { id: Number(examId) } },
+      where: {
+        ...rest,
+        exam: { id: Number(examId) },
+      },
+      order: { id: 'ASC' },
+    });
+  }
+
+  async findAllByStudentId(studentId: string) {
+    return this.gradeRepository.find({
+      where: {
+        student: { id: Number(studentId) },
+      },
       order: { id: 'ASC' },
     });
   }

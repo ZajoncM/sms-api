@@ -6,6 +6,9 @@ export class CreateCourseInput extends PickType(Course, ['name'], InputType) {
   @Field(() => String, { nullable: true })
   teacherId: string;
 
+  @Field(() => String, { nullable: true })
+  studentId: string;
+
   @Field(() => String)
   groupId: string;
 }

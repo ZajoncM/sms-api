@@ -37,7 +37,7 @@ export class CoursesResolver {
   }
 
   @Query(() => [Course], { name: 'courses' })
-  @Roles(UserRole.ADMIN, UserRole.TEACHER)
+  @Roles(UserRole.ADMIN, UserRole.TEACHER, UserRole.STUDENT)
   async findAll(
     @Args('updateCourseInput', { nullable: true })
     courseDto?: UpdateCourseInput,
@@ -46,7 +46,7 @@ export class CoursesResolver {
   }
 
   @Query(() => Course, { name: 'course' })
-  @Roles(UserRole.ADMIN, UserRole.TEACHER)
+  @Roles(UserRole.ADMIN, UserRole.TEACHER, UserRole.STUDENT)
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.coursesService.findOne(id);
   }

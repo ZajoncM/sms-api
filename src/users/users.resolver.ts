@@ -1,4 +1,12 @@
-import { Resolver, Query, Mutation, Args, Int } from '@nestjs/graphql';
+import {
+  Resolver,
+  Query,
+  Mutation,
+  Args,
+  Int,
+  Parent,
+  ResolveField,
+} from '@nestjs/graphql';
 import { UsersService } from './users.service';
 import { User } from './entities/user.entity';
 import { CreateUserInput } from './dto/create-user.input';
@@ -9,11 +17,17 @@ import { CurrentUser } from 'src/utils/current-user.decorator';
 import { Roles } from 'src/utils/roles.decorator';
 import { UserRole } from './enums/role.enum';
 import { RolesGuard } from './guards/roles.guard';
+import { Grade } from 'src/grades/entities/grade.entity';
+import { Course } from 'src/courses/entities/course.entity';
+import { CoursesService } from 'src/courses/courses.service';
 
 @Resolver(() => User)
 @UseGuards(GqlAuthGuard, RolesGuard)
 export class UsersResolver {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly coursesService: CoursesService,
+  ) {}
 
   @Mutation(() => User)
   @Roles(UserRole.ADMIN)
@@ -53,5 +67,13 @@ export class UsersResolver {
   @Query(() => User)
   currentUser(@CurrentUser() user: User) {
     return this.usersService.findOne({ email: user.email });
+  }
+
+  @ResolveField(() => [Course])
+  courses(@Parent() user: User) {
+    if (user.role === UserRole.STUDENT) {
+      return this.coursesService.findAllByStudent(user.student.id);
+    }
+    return [];
   }
 }

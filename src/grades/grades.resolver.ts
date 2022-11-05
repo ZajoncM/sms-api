@@ -17,7 +17,7 @@ export class GradesResolver {
   }
 
   @Query(() => [Grade], { name: 'grades' })
-  @Roles(UserRole.TEACHER)
+  @Roles(UserRole.TEACHER, UserRole.STUDENT)
   async findAll(
     @Args('gradeDto', { nullable: true })
     gradeDto: UpdateGradeInput,
