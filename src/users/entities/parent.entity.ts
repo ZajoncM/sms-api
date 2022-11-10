@@ -5,7 +5,9 @@ import {
   BaseEntity,
   JoinColumn,
   OneToOne,
+  OneToMany,
 } from 'typeorm';
+import { Student } from './student.entity';
 import { User } from './user.entity';
 
 @Entity()
@@ -19,4 +21,8 @@ export class Parent extends BaseEntity {
   @OneToOne(() => User, (user) => user.parent, { onDelete: 'CASCADE' })
   @JoinColumn()
   user: User;
+
+  @Field(() => [Student])
+  @OneToMany(() => Student, (student) => student.parent, { eager: true })
+  children: Student[];
 }

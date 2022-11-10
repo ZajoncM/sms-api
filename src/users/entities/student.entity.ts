@@ -12,6 +12,7 @@ import {
 } from 'typeorm';
 import { User } from './user.entity';
 import { Grade } from 'src/grades/entities/grade.entity';
+import { Parent } from './parent.entity';
 
 @Entity()
 @InputType('studentEntity')
@@ -39,4 +40,7 @@ export class Student extends BaseEntity {
   @Field(() => [Grade], { nullable: true })
   @OneToMany(() => Grade, (grade) => grade.student)
   grades: Grade[];
+
+  @ManyToOne(() => Parent, (parent) => parent.children)
+  parent: Parent;
 }

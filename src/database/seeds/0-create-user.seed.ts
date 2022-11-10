@@ -19,5 +19,10 @@ export default class CreateUser implements Seeder {
       password: 'teacher',
       role: UserRole.TEACHER,
     });
+
+    await factory(User)().createMany(4, {
+      password: 'parent',
+      role: UserRole.PARENT,
+    });
   }
 }
