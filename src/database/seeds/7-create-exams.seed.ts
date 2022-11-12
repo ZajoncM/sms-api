@@ -3,7 +3,7 @@ import { Connection } from 'typeorm';
 import { Course } from 'src/courses/entities/course.entity';
 import { Exam } from 'src/exams/entities/exam.entity';
 
-export default class CreateTeachers implements Seeder {
+export default class CreateExams implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
     const courses = await connection.getRepository(Course).find();
 

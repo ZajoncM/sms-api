@@ -5,7 +5,7 @@ import { Course } from 'src/courses/entities/course.entity';
 import { Teacher } from 'src/users/entities/teacher.entity';
 import { sample } from 'lodash';
 
-export default class CreateTeachers implements Seeder {
+export default class CreateCourses implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
     const groups = await connection.getRepository(Group).find();
 

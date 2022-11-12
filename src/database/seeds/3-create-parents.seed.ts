@@ -5,7 +5,7 @@ import { UserRole } from 'src/users/enums/role.enum';
 import { Parent } from 'src/users/entities/parent.entity';
 import { Student } from 'src/users/entities/student.entity';
 
-export default class CreateTeachers implements Seeder {
+export default class CreateParents implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
     const users = await connection
       .getRepository(User)

@@ -3,7 +3,7 @@ import { Connection } from 'typeorm';
 import { Student } from 'src/users/entities/student.entity';
 import { Group } from 'src/groups/entities/group.entity';
 
-export default class CreateTeachers implements Seeder {
+export default class CreateGroups implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
     for (let i = 0; i < 4; i++) {
       const students = await connection
