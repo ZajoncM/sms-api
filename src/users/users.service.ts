@@ -18,6 +18,8 @@ export class UsersService {
     private studentRepository: Repository<Student>,
     @InjectRepository(Teacher)
     private teacherRepository: Repository<Teacher>,
+    @InjectRepository(Parent)
+    private parentReopsitory: Repository<Parent>,
   ) {}
 
   async create(createUserInput: CreateUserInput) {
@@ -34,6 +36,10 @@ export class UsersService {
 
   async findOne(userDto: UpdateUserInput) {
     return this.usersRepository.findOneBy({ ...userDto });
+  }
+
+  async findOneParent(id: number) {
+    return this.parentReopsitory.findOneBy({ user: { id } });
   }
 
   async update(id: number, updateUserInput: UpdateUserInput) {
@@ -74,10 +80,25 @@ export class UsersService {
     return this.studentRepository.findOneBy({ id });
   }
 
+  async findParent(id: number) {
+    return this.parentReopsitory.findOneBy({ user: { id } });
+  }
+
   async findStudentsByGroup(id: number) {
     return this.studentRepository.find({
       where: { group: { id } },
       relations: { user: true },
+    });
+  }
+
+  async findStudentsByParent(id: number) {
+    return this.studentRepository.find({
+      where: { parent: { id } },
+      relations: {
+        user: true,
+        attendances: { lesson: true },
+        grades: { exam: true },
+      },
     });
   }
 

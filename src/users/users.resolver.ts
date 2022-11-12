@@ -17,7 +17,6 @@ import { CurrentUser } from 'src/utils/current-user.decorator';
 import { Roles } from 'src/utils/roles.decorator';
 import { UserRole } from './enums/role.enum';
 import { RolesGuard } from './guards/roles.guard';
-import { Grade } from 'src/grades/entities/grade.entity';
 import { Course } from 'src/courses/entities/course.entity';
 import { CoursesService } from 'src/courses/courses.service';
 
