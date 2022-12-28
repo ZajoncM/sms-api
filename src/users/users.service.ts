@@ -22,38 +22,22 @@ export class UsersService {
     private parentReopsitory: Repository<Parent>,
   ) {}
 
-  async create(createUserInput: CreateUserInput) {
-    const user = await this.usersRepository.create(createUserInput);
-
-    await this.createRole(user);
-
-    return user.save();
-  }
-
-  async findAll(userDto?: UpdateUserInput) {
-    return this.usersRepository.findBy({ ...userDto });
-  }
-
-  async findOne(userDto: UpdateUserInput) {
-    return this.usersRepository.findOneBy({ ...userDto });
-  }
-
-  async findOneParent(id: number) {
-    return this.parentReopsitory.findOneBy({ user: { id } });
-  }
-
   async update(id: number, updateUserInput: UpdateUserInput) {
     await this.usersRepository.update(id, { ...updateUserInput });
 
     return this.findOne({ id });
   }
 
-  async remove(id: number) {
-    const user = await this.findOne({ id });
+  async findOne(userDto: UpdateUserInput) {
+    return this.usersRepository.findOneBy({ ...userDto });
+  }
 
-    const deletedUser = await user.remove();
+  async create(createUserInput: CreateUserInput) {
+    const user = await this.usersRepository.create(createUserInput);
 
-    return { ...deletedUser, id };
+    await this.createRole(user);
+
+    return user.save();
   }
 
   async createRole(user: User) {
@@ -70,6 +54,22 @@ export class UsersService {
     }
 
     return user.save();
+  }
+
+  async findAll(userDto?: UpdateUserInput) {
+    return this.usersRepository.findBy({ ...userDto });
+  }
+
+  async findOneParent(id: number) {
+    return this.parentReopsitory.findOneBy({ user: { id } });
+  }
+
+  async remove(id: number) {
+    const user = await this.findOne({ id });
+
+    const deletedUser = await user.remove();
+
+    return { ...deletedUser, id };
   }
 
   async findTeacher(id: number) {
